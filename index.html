@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>XITS - Assistente Pessoal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#00ff9d">
+<style>
+/* CSS completo com tema dark/light + animações */
+:root{--primary:#00ff9d;--bg:#03050a;--text:#dff5ec}
+[data-theme="light"]{--bg:#f8fafc;--text:#0f172a;--primary:#00b374}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:monospace;min-height:100vh;transition:0.4s}
+header{padding:15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,255,157,0.3)}
+.orb{width:200px;height:200px;margin:40px auto;border-radius:50%;background:radial-gradient(circle at 38% 32%,#fff,var(--primary));box-shadow:0 0 80px var(--primary);animation:pulse 2.5s infinite;cursor:pointer}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+button, input{padding:12px 20px;margin:8px;border-radius:8px;border:1px solid var(--primary);background:rgba(255,255,255,0.1);color:var(--text)}
+button{background:var(--primary);color:#000;font-weight:bold;cursor:pointer}
+</style>
+</head>
+<body data-theme="dark">
+
+<header>
+  <h1>XITS</h1>
+  <button onclick="toggleTheme()">🌙</button>
+</header>
+
+<div class="orb" onclick="activateOrb()"></div>
+<div id="status" style="text-align:center;font-size:1.1rem;letter-spacing:2px">OCIOSO • Toque no orb</div>
+
+<div style="max-width:700px;margin:20px auto;padding:0 15px">
+  <input type="text" id="msg" placeholder="Digite ou fale..." style="width:100%" onkeypress="if(event.key==='Enter')send()">
+  <button onclick="send()" style="width:100%">ENVIAR</button>
+</div>
+
+<div id="chat" style="max-width:700px;margin:20px auto;padding:15px"></div>
+
+<script>
+let dark = true;
+function toggleTheme(){
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark?'dark':'light');
+}
+function activateOrb(){
+  document.getElementById('status').textContent = "OUVINDO...";
+  setTimeout(()=>document.getElementById('status').textContent = "XITS ATIVO", 1500);
+}
+function send(){
+  const input = document.getElementById('msg');
+  if(!input.value) return;
+  const chat = document.getElementById('chat');
+  chat.innerHTML += `<p><b>Você:</b> ${input.value}</p>`;
+  chat.innerHTML += `<p><b>XITS:</b> Entendido, Randy. Como posso ajudar mais?</p>`;
+  input.value = "";
+  chat.scrollTop = chat.scrollHeight;
+}
+console.log("%cXITS v5.0 online - Feito com ❤️ para Randy","color:#00ff9d;font-size:16px");
+</script>
+</body>
+</html>
